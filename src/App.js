@@ -16,7 +16,11 @@ class App extends Component {
   };
 
   addContact = ({ name, number }) => {
-    if (this.state.contacts.some(item => item.name === name)) {
+    if (
+      this.state.contacts.some(
+        item => item.name.toLowerCase() === name.toLowerCase()
+      )
+    ) {
       console.log(alert(`${name} is already in contacts`));
       return;
     }
@@ -50,7 +54,7 @@ class App extends Component {
   };
 
   render() {
-    const filteredContacst = this.getFilteredContacts();
+    const filteredContacts = this.getFilteredContacts();
     const { filter } = this.state;
     return (
       <div>
@@ -59,7 +63,7 @@ class App extends Component {
         <h2>Contacts</h2>
         <Filter value={filter} onChange={this.changeFilter} />
         <ContactList
-          contacts={filteredContacst}
+          contacts={filteredContacts}
           onDeleteContact={this.deleteContact}
         />
       </div>
