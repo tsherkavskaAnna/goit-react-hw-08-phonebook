@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import s from './ContactList.module.css';
+import { ContactItem } from './ContactItem';
 
 const ContactList = ({ contacts, onDeleteContact }) => {
   return (
@@ -15,26 +16,6 @@ const ContactList = ({ contacts, onDeleteContact }) => {
         );
       })}
     </ul>
-  );
-};
-
-const ContactItem = ({ contact, onDeleteContact }) => {
-  const { id, name, number } = contact;
-  return (
-    <li className={s.contactsItem}>
-      <p className={s.itemName}>{name}</p>
-      <p className={s.itemName}>{number}</p>
-      <button
-        className={s.btnDelete}
-        type="button"
-        id={id}
-        onClick={event => {
-          onDeleteContact(event.target.id);
-        }}
-      >
-        Delete
-      </button>
-    </li>
   );
 };
 
