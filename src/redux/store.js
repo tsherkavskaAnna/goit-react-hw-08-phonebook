@@ -10,23 +10,27 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { todoSlice } from './todosSlice';
+import { contactSlice } from './itemSlice';
+
 
 const persistConfig = {
-  key: 'todos',
-  storage,
-};
+    key: 'contacts',
+    storage,
+    blacklist: ['filter'],
+}
 
-const persistedReducer = persistReducer(persistConfig, todoSlice.reducer);
+const persistedReducer = persistReducer(persistConfig, contactSlice.reducer)
 
 export const store = configureStore({
-  reducer: persistedReducer,
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
-});
+    reducer: persistedReducer,
+    middleware: getDefaultMiddleware =>
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      }),
+      devTools: process.env.NODE_ENV !== 'development',
+  });
 
+  
 export const persistor = persistStore(store);
