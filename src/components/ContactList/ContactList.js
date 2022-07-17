@@ -8,9 +8,10 @@ import { getFilter, getItems } from 'redux/itemSelectors';
 const ContactList = () => {
   const items = useSelector(getItems);
   const filter = useSelector(getFilter);
+  
 
   const getNormalizedItem = () => {
-    const  normalizedFilter = filter.toLowerCase();
+    const  normalizedFilter = filter.toLowerCase().trim();
     return items.filter(item => item.name.toLowerCase().includes(normalizedFilter))
   }
   const contacts = getNormalizedItem()
@@ -23,6 +24,7 @@ const ContactList = () => {
               key={id}
               name={name}
               number={number}
+              id={id}
             />
           );
         })}

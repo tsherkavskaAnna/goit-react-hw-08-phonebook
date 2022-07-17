@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { addContact } from 'redux/itemSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 import s from './ContactForm.module.css';
 import { nanoid } from 'nanoid';
 import { getItems } from 'redux/itemSelectors';
@@ -35,12 +37,13 @@ const ContactsForm = () => {
       id: nanoid(),
       name,
       number,
-    }
+    };
 
-    if(contacts.some(contact => contact.name === newContact.name)) {
-      alert('The new contact added in the list')
-    } dispatch(addContact(newContact))
-reset()
+    contacts.find(contact => contact.name.toLowerCase() === name.toLowerCase())
+    ? toast.warning('Name is already in contacts list!')
+    : dispatch(addContact(newContact))
+
+    reset();
   }
 
 
@@ -86,6 +89,7 @@ reset()
       >
         Add Contact
       </button>
+      <ToastContainer />
     </form>
   );
 };
