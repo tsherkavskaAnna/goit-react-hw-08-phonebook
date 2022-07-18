@@ -39,10 +39,11 @@ const ContactsForm = () => {
       number,
     };
 
-    contacts.find(contact => contact.name.toLowerCase() === name.toLowerCase())
-    ? toast.warning('Name is already in contacts list!')
-    : dispatch(addContact(newContact))
-
+    if (contacts.find(contact => contact.name.toLowerCase() === name.toLowerCase())) {
+      toast.warning('Name is already in contacts list!')
+    } else {
+      dispatch(addContact(newContact))
+    }
     reset();
   }
 
