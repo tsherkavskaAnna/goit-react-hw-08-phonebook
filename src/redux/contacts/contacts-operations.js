@@ -12,6 +12,22 @@ import {
   deleteContactsError,
 } from './contacts-actions';
 
+
+
+const addContact = ({name, number}) => dispatch => {
+    const contact = {
+        name,
+        number
+    };
+
+    dispatch(addContactsRequest());
+    axios
+    .post('/contacts', contact)
+    .then(({ data }) => dispatch(addContactsSuccess(data)))
+    .catch(error => dispatch(addContactsError(error.message)))
+};
+
+
 const fetchContacts = () => async dispatch => {
     dispatch(fetchContactsRequest());
     try {
@@ -22,26 +38,14 @@ const fetchContacts = () => async dispatch => {
     }
 };
 
-const addContact = (name, number) => async dispatch => {
-    const contacts = { name, number };
-    dispatch(addContactsRequest());
-    try {
-        const { data } = await axios.post('/contacts', contacts);
-        dispatch(addContactsSuccess(data))
-    } catch(error) {
-        dispatch(addContactsError(error.message))
-    }
-};
-
-const deleteContact = contactId => async dispatch => {
+const deleteContact = contactId => dispatch => {
     dispatch(deleteContactsRequest());
-    try {
-        await axios.delete(`/contacts/${contactId}`);
-        dispatch(deleteContactsSuccess(contactId));
-    } catch(error) {
-        dispatch(deleteContactsError(error.message));
-    }
-};
+    
+    axios
+    .delete(`/contacts/${contactId}`)
+    .then(() => dispatch(deleteContactsSuccess(contactId)))
+    .catch(error => dispatch(deleteContactsError(error.message)))
+}
 
 const contactsOperations = {
     fetchContacts,

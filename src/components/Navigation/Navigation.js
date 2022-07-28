@@ -4,7 +4,7 @@ import { authSelectors } from "redux/auth";
 import s from './Navigation.module.css';
 
 export default function Navigation() {
-const isLogIn = useSelector(authSelectors.getIsLogIn);
+const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
 
 return (
     <nav>
@@ -13,7 +13,7 @@ return (
         className={({ isActive }) => (isActive ? s.activeLink : s.link)}
         >Home
         </NavLink>
-        {isLogIn && (
+        {isLoggedIn && (
             <NavLink
             to='/contacts'
             className={({ isActive }) => (isActive ? s.activeLink : s.link)}

@@ -11,7 +11,7 @@ import s from './ContactsPage.module.css'
 export default function ContactsPage() {
   const dispatch = useDispatch();
 
-  dispatch(contactsOperations.fetchContacts());
+  dispatch(contactsOperations.addContact());
 
   return (
     <main>

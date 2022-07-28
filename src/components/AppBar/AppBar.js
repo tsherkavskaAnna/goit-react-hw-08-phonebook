@@ -8,11 +8,11 @@ import s from './AppBar.module.css';
 
 
 export default function AppBar() {
-    const isLogIn = useSelector(authSelectors.getIsLogIn);
+    const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
     return (
         <header className={s.header}>
             <Navigation />
-            {isLogIn ? <UserMenu /> : <AuthNav />}
+            {isLoggedIn ? <UserMenu /> : <AuthNav />}
         </header>
     )
 }

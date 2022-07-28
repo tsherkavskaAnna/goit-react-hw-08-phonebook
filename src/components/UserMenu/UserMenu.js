@@ -11,7 +11,7 @@ export default function UserMenu() {
     return (
     <div className={s.userMenuContainer}>
         <img src={avatar} alt=" " width="32" className={s.avatarImg}  />
-        <span>Welcome to phonebook, {name}</span>
+        <span>Welcome, {name}</span>
         <button type="button" onClick={() => dispatch(authOperations.logOut())}  >
             Log out
         </button>
