@@ -1,0 +1,18 @@
+import Navigation from "components/Navigation/Navigation";
+import UserMenu from "components/UserMenu/UserMenu";
+import AuthNav from "components/AuthNav/AuthNav";
+
+import { useSelector } from "react-redux";
+import { authSelectors } from "redux/auth";
+import s from './AppBar.module.css';
+
+
+export default function AppBar() {
+    const isLogIn = useSelector(authSelectors.getIsLogIn);
+    return (
+        <header className={s.header}>
+            <Navigation />
+            {isLogIn ? <UserMenu /> : <AuthNav />}
+        </header>
+    )
+}

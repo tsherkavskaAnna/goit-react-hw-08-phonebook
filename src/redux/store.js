@@ -10,20 +10,23 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { contactSlice } from './itemSlice';
+import contactsReducer from './contacts/contacts-reducer';
+import { authReducer } from './auth';
 
 
-const persistConfig = {
-    key: 'contacts',
+const authPersistConfig = {
+    key: 'auth',
     storage,
-    blacklist: ['filter'],
+    whitelist: ['token'],
 }
 
-const persistedReducer = persistReducer(persistConfig, contactSlice.reducer)
+
+const persistedAuthReducer = persistReducer(authPersistConfig, authReducer)
 
 export const store = configureStore({
     reducer: {
-      contacts: persistedReducer,
+      auth: persistedAuthReducer,
+      contacts: contactsReducer,
     },
     middleware: getDefaultMiddleware =>
       getDefaultMiddleware({
@@ -31,7 +34,7 @@ export const store = configureStore({
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
       }),
-      devTools: process.env.NODE_ENV !== 'development',
+      devTools: process.env.NODE_ENV === 'development',
   });
 
   
