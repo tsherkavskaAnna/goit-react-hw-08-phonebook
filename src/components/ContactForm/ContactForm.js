@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
 import s from './ContactForm.module.css';
-import contactsOperations from 'redux/contacts/contacts-operations';
+import { addContactThunk } from 'redux/contacts/contacts-operations';
 import { getContacts } from 'redux/contacts/contacts-selectors';
 import { useId } from 'react';
 
@@ -43,7 +43,7 @@ const ContactsForm = () => {
     if (contacts.find(contact => contact.name.toLowerCase() === name.toLowerCase())) {
       toast.warning('Name is already in contacts list!')
     } else {
-      dispatch(contactsOperations.addContact(newContact))
+      dispatch(addContactThunk(newContact))
     }
     reset();
   }

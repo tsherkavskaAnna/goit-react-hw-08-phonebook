@@ -1,21 +1,69 @@
-import { combineReducers } from "redux";
-import { createReducer } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import {
-    fetchContactsSuccess,
-    addContactsSuccess,
-    deleteContactsSuccess,
-    changeFilter,
-} from './contacts-actions';
+    getContactsThunk,
+    addContactThunk,
+    deleteContactThunk,
+} from './contacts-operations';
 
-const items = createReducer([], {
-    [fetchContactsSuccess]: (_, { payload }) => payload,
-    [addContactsSuccess]: (state, { payload }) => [...state, payload],
-    [deleteContactsSuccess]: (state, { payload }) => state.filter(({ id }) => id !== payload),
-});
+const initialState = {
+    items: [],
+    filter: '',
+    isLoading: true,
+    error: null,
+}
 
+const contactsSlice = createSlice({
+    name: 'contacts',
+    initialState,
 
-const filter = createReducer('', {
-    [changeFilter]: (_, { payload }) => payload,
-});
+    reducers: {
+        filterContact: (state, action) => {
+            state.filter = action.payload;
+        }
+    },
 
-export default combineReducers({items, filter});
+    extraReducers: {
+        [getContactsThunk.fulfilled]: (state, action) => {
+            state.items = action.payload;
+            state.isLoading = false;
+            state.error = null;
+        },
+        [getContactsThunk.pending]: state => {
+            state.isLoading = true;
+            state.error = null;
+        },
+        [getContactsThunk.rejected]: (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        },
+
+        [addContactThunk.fulfilled]: (state, action) => {
+            state.isLoading = false;
+            state.error = null;
+        },
+        [addContactThunk.pending]: state => {
+            state.isLoading = true;
+            state.error = null;
+        },
+        [addContactThunk.rejected]: (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        },
+
+        [deleteContactThunk.fulfilled]: state => {
+            state.isLoading = false;
+            state.error = null;
+        },
+        [deleteContactThunk.pending]: state => {
+            state.isLoading = true;
+            state.error = null;
+        },
+        [deleteContactThunk.rejected]: (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        },
+    }
+})
+
+export const { filterContact } = contactsSlice.actions;
+export const contactsSliceReducer = contactsSlice.reducer;

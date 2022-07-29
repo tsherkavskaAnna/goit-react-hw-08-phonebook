@@ -1,12 +1,12 @@
 import { useDispatch } from 'react-redux';
+import { deleteContactThunk } from 'redux/contacts/contacts-operations';
 import s from './ContactList.module.css';
-import contactsOperations from 'redux/contacts/contacts-operations';
 
 
-export const ContactItem = ({ id, name, number }) => {
+export const ContactItem = ({ contactId, name, number }) => {
   const dispatch = useDispatch();
+  const idDelete = { contactId, name }
   
-  const onDelete = id => dispatch(contactsOperations.deleteContact(id))
 
   return (
     <li className={s.contactsItem}>
@@ -15,7 +15,7 @@ export const ContactItem = ({ id, name, number }) => {
       <button
         className={s.btnDelete}
         type="button"
-        onClick={() => dispatch(onDelete(id))}
+        onClick={() => dispatch(deleteContactThunk(idDelete))}
       >
         Delete
       </button>

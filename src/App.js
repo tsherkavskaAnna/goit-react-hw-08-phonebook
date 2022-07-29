@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { authOperations, authSelectors } from './redux/auth';
 import { Routes, Route } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -20,27 +21,19 @@ const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
 
 export default function App() {
   const dispatch = useDispatch();
-  const isLoading = useSelector(authSelectors.getLoading);
+const isFetchingUser = useSelector(authSelectors.getIsFetchingCurrent)
 
   useEffect(() => {
     dispatch(authOperations.fetchCurrentUser());
   }, [dispatch]);
 
   return (
-    !isLoading && (
       <Container>
+        {isFetchingUser}
         <AppBar />
         <Suspense fallback="Loading...">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route
-              path="contacts"
-              element={
-                <PrivateRoute>
-                  <ContactsPage />
-                </PrivateRoute>
-              }
-            />
             <Route
               path="register"
               element={
@@ -57,10 +50,18 @@ export default function App() {
                 </PublicRoute>
               }
             />
+            <Route
+              path="contacts"
+              element={
+                <PrivateRoute>
+                  <ContactsPage />
+                </PrivateRoute>
+              }
+            />
+            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </Suspense>
         <ToastContainer />
       </Container>
     )
-  );
 }

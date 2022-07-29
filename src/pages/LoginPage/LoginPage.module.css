@@ -2,12 +2,12 @@
     min-width: 320px;
     max-width: 480px;
     padding-left: 25px;
-    padding-right: 25px;
+    padding-right: 40px;
     margin-right: auto;
     margin-left: auto;
     text-align: center;
-    background-color: rosybrown;
-    box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
+    background-color: rgb(236, 201, 236);
+    box-shadow: 0 4px 4px rgba(61, 56, 56, 0.136);
     border-radius: 6px;
     overflow: hidden;
   }
@@ -36,13 +36,13 @@
     width: 100%;
     padding: 8px;
     font-weight: normal;
-    border: 2px solid grey;
+    border: 2px solid rgb(80, 197, 229);
     border-radius: 4px;
   }
   
   .input:hover,
   .input:focus {
-    border: 2px solid #2196f3;
+    border: 2px solid blue;
     cursor: pointer;
   }
   
@@ -52,7 +52,7 @@
     padding: 8px 12px;
     font-weight: normal;
     background-color: transparent;
-    border: 2px solid gray;
+    border: 2px solid rgb(1, 21, 4);
     border-radius: 4px;
     cursor: pointer;
   }

@@ -1,56 +1,47 @@
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-import {
-    fetchContactsRequest,
-  fetchContactsSuccess,
-  fetchContactsError,
-  addContactsRequest,
-  addContactsSuccess,
-  addContactsError,
-  deleteContactsRequest,
-  deleteContactsSuccess,
-  deleteContactsError,
-} from './contacts-actions';
+axios.defaults.baseURL = 'https://connections-api.herokuapp.com/';
 
-
-
-const addContact = ({name, number}) => dispatch => {
-    const contact = {
-        name,
-        number
-    };
-
-    dispatch(addContactsRequest());
-    axios
-    .post('/contacts', contact)
-    .then(({ data }) => dispatch(addContactsSuccess(data)))
-    .catch(error => dispatch(addContactsError(error.message)))
-};
-
-
-const fetchContacts = () => async dispatch => {
-    dispatch(fetchContactsRequest());
-    try {
-        const { data } = await axios.get('/contacts');
-        dispatch(fetchContactsSuccess(data))
-    } catch (error) {
-        dispatch(fetchContactsError(error.message));
+export const getContactsThunk = createAsyncThunk(
+    'contacts/getContactsThunk',
+    async (_, thunkAPI) => {
+        try {
+            const contacts = await axios.get('contacts');
+            return contacts.data;
+        }
+        catch (error) {
+            return thunkAPI.rejectWithValue(error)
+        }
     }
-};
+)
 
-const deleteContact = contactId => dispatch => {
-    dispatch(deleteContactsRequest());
-    
-    axios
-    .delete(`/contacts/${contactId}`)
-    .then(() => dispatch(deleteContactsSuccess(contactId)))
-    .catch(error => dispatch(deleteContactsError(error.message)))
-}
+export const addContactThunk = createAsyncThunk(
+    'contacts/addContactThunk',
+    async (contact, thunkAPI) => {
+        try {
+            const contacts = await axios.post('contacts', contact);
+            thunkAPI.dispatch(getContactsThunk());
+            toast.success(`Contact ${contact.name} added`);
+            return contacts.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+)
 
-const contactsOperations = {
-    fetchContacts,
-    addContact,
-    deleteContact,
-};
-
-export default contactsOperations;
+export const deleteContactThunk = createAsyncThunk(
+    'contacts/deleteContactThunk',
+    async ({ contactId, name }, thunkAPI) => {
+        try {
+            const deleteContact = await axios.delete(`contacts/${contactId}`);
+            thunkAPI.dispatch(getContactsThunk());
+            console.log(deleteContact);
+            toast.success(`Contact ${name} deleted`);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+)

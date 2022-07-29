@@ -8,18 +8,22 @@ const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
 
 return (
     <nav>
-        <NavLink
-        to='/'
-        className={({ isActive }) => (isActive ? s.activeLink : s.link)}
-        >Home
-        </NavLink>
-        {isLoggedIn && (
+        {!isLoggedIn ? (
             <NavLink
-            to='/contacts'
+            to="/"
+            exact="true"
             className={({ isActive }) => (isActive ? s.activeLink : s.link)}
             >
-             Contacts   
+            Home
+            </NavLink>
+        ) : (
+            <NavLink
+            to="/contacts"
+            exact="true"
+            className={({ isActive }) => (isActive ? s.activeLink : s.link)}
+            >
+            Phonebook
             </NavLink>
         )}
-    </nav>
+        </nav>
 )}
