@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { authOperations, authSelectors } from './redux/auth';
 import { Routes, Route } from 'react-router-dom';
-import { Navigate } from 'react-router-dom';
+//import { Navigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,7 +21,7 @@ const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
 
 export default function App() {
   const dispatch = useDispatch();
-const isFetchingUser = useSelector(authSelectors.getIsFetchingCurrent)
+  const isFetchingUser = useSelector(authSelectors.getIsFetchingCurrent)
 
   useEffect(() => {
     dispatch(authOperations.fetchCurrentUser());
@@ -33,32 +33,14 @@ const isFetchingUser = useSelector(authSelectors.getIsFetchingCurrent)
         <AppBar />
         <Suspense fallback="Loading...">
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route
-              path="register"
-              element={
-                <PublicRoute>
-                  <RegisterPage />
-                </PublicRoute>
-              }
-            />
-            <Route
-              path="login"
-              element={
-                <PublicRoute>
-                  <LoginPage />
-                </PublicRoute>
-              }
-            />
-            <Route
-              path="contacts"
-              element={
-                <PrivateRoute>
-                  <ContactsPage />
-                </PrivateRoute>
-              }
-            />
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route exact path="/" element={<HomePage />} />
+            <Route element={<PrivateRoute />}>
+              <Route element={<ContactsPage />} path="/contacts" />
+            </Route>
+            <Route element={<PublicRoute />}>
+              <Route path="/register" element={<RegisterPage/>} />
+              <Route path="/login" element={<LoginPage/>} />
+            </Route>
           </Routes>
         </Suspense>
         <ToastContainer />

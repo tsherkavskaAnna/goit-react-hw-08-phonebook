@@ -35,6 +35,7 @@ const initialState = {
       [authOperations.fetchCurrentUser.fulfilled](state, action) {
         state.user = action.payload;
         state.isLoggedIn = true;
+        state.isFetchingCurrentUser = false;
       },
       [authOperations.fetchCurrentUser.rejected](state) {
         state.isFetchingCurrentUser = false;

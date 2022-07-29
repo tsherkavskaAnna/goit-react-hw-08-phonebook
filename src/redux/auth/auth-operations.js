@@ -22,8 +22,7 @@ const register = createAsyncThunk(
           toast.success(`You successfully signed up!`)
           return data;
       } catch (error) {
-          toast.failure(`Something went wrong! Try again!`)
-          return thunkAPI.rejectWithValue(error);
+          return toast.failure(`Something went wrong! Try again!`)
       }
   }
 )
