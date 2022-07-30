@@ -15,14 +15,15 @@ const token = {
 };
 const register = createAsyncThunk(
   'auth/register',
-  async (credentials, thunkAPI) => {
+  async (credentials) => {
       try {
           const { data } = await axios.post('users/signup', credentials);
           token.set(data.token);
           toast.success(`You successfully signed up!`)
           return data;
       } catch (error) {
-          return toast.failure(`Something went wrong! Try again!`)
+           return toast.failure(`Something went wrong! Try again!`)
+           
       }
   }
 )
