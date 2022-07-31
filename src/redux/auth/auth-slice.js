@@ -8,7 +8,6 @@ const initialState = {
     isLoggedIn: false,
     isFetchingCurrentUser: false,
   };
-
  
   const authSlice = createSlice({
     name: 'auth',
@@ -18,6 +17,7 @@ const initialState = {
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isLoggedIn = true;
+        state.isFetchingCurrentUser = false;
       },
       [authOperations.logIn.fulfilled](state, action) {
         state.user = action.payload.user;

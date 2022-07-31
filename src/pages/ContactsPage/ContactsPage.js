@@ -1,18 +1,15 @@
 import { useDispatch } from 'react-redux';
-
 import ContactsForm from 'components/ContactForm/ContactForm';
 import Filter from 'components/Filter/Filter';
 import ContactList from 'components/ContactList/ContactList';
-
-import 'react-toastify/dist/ReactToastify.css';
 import s from './ContactsPage.module.css'
-import { getContacts } from 'redux/contacts/contacts-operations';
+import contactsOperations from 'redux/contacts/contacts-operations';
 
 export default function ContactsPage() {
   const dispatch = useDispatch();
 
-  dispatch(getContacts());
-
+  dispatch(contactsOperations.fetchContacts());
+console.log(contactsOperations.fetchContacts())
   return (
     <main>
       <section className={s.phonebook}>

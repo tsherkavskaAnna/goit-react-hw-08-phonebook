@@ -17,7 +17,7 @@ const register = createAsyncThunk(
   'auth/register',
   async credentials => {
       try {
-          const { data } = await axios.post('users/signup', credentials);
+          const { data } = await axios.post('/users/signup', credentials);
           token.set(data.token);
           toast.success(`You successfully signed up!`)
           return data;
@@ -39,7 +39,7 @@ const logIn = createAsyncThunk('auth/login', async credentials => {
   }
 });
 
-const logOut = createAsyncThunk('auth/logout', async () => {
+const logOut = createAsyncThunk('/auth/logout', async () => {
     try {
         await axios.post('/users/logout');
         toast.success('Well, see you later!');
@@ -50,7 +50,7 @@ const logOut = createAsyncThunk('auth/logout', async () => {
 });
 
 const fetchCurrentUser = createAsyncThunk(
-  'auth/refresh',
+  '/auth/refresh',
   async (_, thunkAPI) => {
     const state = thunkAPI.getState();
     const persistedToken = state.auth.token;

@@ -1,44 +1,61 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {
+    fetchContactsRequest,
+    fetchContactsSuccess,
+    fetchContactsError,
+    addContactRequest,
+    addContactSuccess,
+    addContactError,
+    deleteContactRequest,
+    deleteContactSuccess,
+    deleteContactError,
+  } from './contacts-actions';
 
-axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
-
-export const getContacts = createAsyncThunk(
-    'contacts/getContactsThunk',
-    async () => {
-        try {
-            const { data } = await axios.get('.contacts')
-            return data;
-        }
-        catch (error) {
-            toast.error('Something went wrong!')
-        }
+  const fetchContacts = () => async dispatch => {
+    dispatch(fetchContactsRequest());
+  
+    try {
+      const { data } = await axios.get('/contacts');
+      dispatch(fetchContactsSuccess(data));
+      console.log(data)
+    } catch (error) {
+      dispatch(fetchContactsError(error.message));
+      toast.error('Error')
     }
-)
-
-export const addContact = createAsyncThunk(
-    'contacts/addContact',
-    async newContact => {
-        try {
-            const contact = await axios.post('/contacts', newContact);
-            toast.success(`Contact ${contact.name} added`);
-            return contact.data;
-        } catch (error) {
-            toast.error('Something went wrong!');
-        }
+  };
+  
+  const addContact = (name, number) => async dispatch => {
+    const contact = { name, number };
+  
+    dispatch(addContactRequest());
+  
+    try {
+      const { data } = await axios.post('/contacts', contact);
+      dispatch(addContactSuccess(data));
+    } catch (error) {
+      dispatch(addContactError(error.message));
+      toast.error('Something went wrong! try again!');
     }
-)
-
-export const deleteContact = createAsyncThunk(
-    'contacts/deleteContact',
-    async contactId => {
-        try {
-            await axios.delete(`/contacts/${contactId}`)
-            toast.success(`Contact ${contactId} deleted`);
-        } catch (error) {
-            toast.error('Something went wrong!');
-        }
+  };
+  
+  const deleteContact = contactId => async dispatch => {
+    dispatch(deleteContactRequest());
+  
+    try {
+      await axios.delete(`/contacts/${contactId}`);
+      dispatch(deleteContactSuccess(contactId));
+    } catch (error) {
+      dispatch(deleteContactError(error.message));
+      toast.error('Something went wrong! try again!');
     }
-)
+  };
+  
+  const contactsOperations = {
+    fetchContacts,
+    addContact,
+    deleteContact,
+  };
+  
+  export default contactsOperations;
