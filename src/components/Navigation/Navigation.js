@@ -21,7 +21,7 @@ return (
         exact="true"
         className={({ isActive }) => (isActive ? s.activeLink : s.link)}
         >
-        Phonebook
+        Contacts
         </NavLink>
         )}      
         <Outlet />
