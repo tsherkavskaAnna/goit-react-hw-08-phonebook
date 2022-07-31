@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-    getContactsThunk,
-    addContactThunk,
-    deleteContactThunk,
+    getContacts,
+    addContact,
+    deleteContact,
 } from './contacts-operations';
 
 const initialState = {
@@ -23,42 +23,42 @@ const contactsSlice = createSlice({
     },
 
     extraReducers: {
-        [getContactsThunk.fulfilled]: (state, action) => {
+        [getContacts.fulfilled]: (state, action) => {
             state.items = action.payload;
             state.isLoading = false;
             state.error = null;
         },
-        [getContactsThunk.pending]: state => {
+        [getContacts.pending]: state => {
             state.isLoading = true;
             state.error = null;
         },
-        [getContactsThunk.rejected]: (state, action) => {
+        [getContacts.rejected]: (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
         },
 
-        [addContactThunk.fulfilled]: (state, action) => {
+        [addContact.fulfilled]: (state, action) => {
             state.isLoading = false;
             state.error = null;
         },
-        [addContactThunk.pending]: state => {
+        [addContact.pending]: state => {
             state.isLoading = true;
             state.error = null;
         },
-        [addContactThunk.rejected]: (state, action) => {
+        [addContact.rejected]: (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
         },
 
-        [deleteContactThunk.fulfilled]: state => {
+        [deleteContact.fulfilled]: state => {
             state.isLoading = false;
             state.error = null;
         },
-        [deleteContactThunk.pending]: state => {
+        [deleteContact.pending]: state => {
             state.isLoading = true;
             state.error = null;
         },
-        [deleteContactThunk.rejected]: (state, action) => {
+        [deleteContact.rejected]: (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
         },

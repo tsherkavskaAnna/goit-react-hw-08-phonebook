@@ -3,45 +3,42 @@ import axios from "axios";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-axios.defaults.baseURL = 'https://connections-api.herokuapp.com/';
+axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
 
-export const getContactsThunk = createAsyncThunk(
+export const getContacts = createAsyncThunk(
     'contacts/getContactsThunk',
-    async (_, thunkAPI) => {
+    async () => {
         try {
-            const contacts = await axios.get('contacts');
-            return contacts.data;
+            const { data } = await axios.get('.contacts')
+            return data;
         }
         catch (error) {
-            return thunkAPI.rejectWithValue(error)
+            toast.error('Something went wrong!')
         }
     }
 )
 
-export const addContactThunk = createAsyncThunk(
-    'contacts/addContactThunk',
-    async (contact, thunkAPI) => {
+export const addContact = createAsyncThunk(
+    'contacts/addContact',
+    async newContact => {
         try {
-            const contacts = await axios.post('contacts', contact);
-            thunkAPI.dispatch(getContactsThunk());
+            const contact = await axios.post('/contacts', newContact);
             toast.success(`Contact ${contact.name} added`);
-            return contacts.data;
+            return contact.data;
         } catch (error) {
-            return thunkAPI.rejectWithValue(error);
+            toast.error('Something went wrong!');
         }
     }
 )
 
-export const deleteContactThunk = createAsyncThunk(
-    'contacts/deleteContactThunk',
-    async ({ contactId, name }, thunkAPI) => {
+export const deleteContact = createAsyncThunk(
+    'contacts/deleteContact',
+    async contactId => {
         try {
-            const deleteContact = await axios.delete(`contacts/${contactId}`);
-            thunkAPI.dispatch(getContactsThunk());
-            console.log(deleteContact);
-            toast.success(`Contact ${name} deleted`);
+            await axios.delete(`/contacts/${contactId}`)
+            toast.success(`Contact ${contactId} deleted`);
         } catch (error) {
-            return thunkAPI.rejectWithValue(error);
+            toast.error('Something went wrong!');
         }
     }
 )

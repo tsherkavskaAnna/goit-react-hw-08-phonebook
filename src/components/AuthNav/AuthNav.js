@@ -9,7 +9,7 @@ export default function AuthNav() {
         to='/register'
         className = {({ isActive }) => (isActive ? s.activeLink : s.link)}
         >
-            Sign up
+         Register
         </NavLink>
         <NavLink
         to='/login'

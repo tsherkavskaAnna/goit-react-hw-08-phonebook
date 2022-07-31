@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import s from './ContactList.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getContactsThunk } from 'redux/contacts/contacts-operations';
 import { getContacts, getFilter } from 'redux/contacts/contacts-selectors';
 import { ContactItem } from './ContactItem';
 
@@ -13,7 +12,7 @@ const ContactList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getContactsThunk());
+    dispatch(getContacts());
   }, [dispatch]);
   
 
