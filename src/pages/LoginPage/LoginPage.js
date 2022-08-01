@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from 'react-redux';
 import { authOperations } from "redux/auth";
-
-import s from './LoginPage.module.css';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import s from '../RegisterPage/RegisterPage.module.css';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -35,39 +36,45 @@ export default function LoginPage() {
   };
 
   return (
-    <main>
-      <section className={s.login}>
-        <h1 className={s.title}>Log in</h1>
-        <form className={s.form} onSubmit={handleSubmit}>
-          <label className={s.label}>
-            Email
-            <input
-              className={s.input}
-              type="email"
-              name="email"
-              value={email}
-              onChange={handleChange}
-              placeholder="e-mail"
-              required
-            />
-          </label>
-          <label className={s.label}>
-            Password
-            <input
-              className={s.input}
-              type="password"
-              name="password"
-              value={password}
-              onChange={handleChange}
-              placeholder="password"
-              required
-            />
-          </label>
-          <button className={s.button} type="submit">
-            Log in
-          </button>
-        </form>
-      </section>
-    </main>
+    <Box
+      component="form"
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '37ch' },
+      }}
+      autoComplete="off"
+      onSubmit={handleSubmit}
+      required
+    >
+    <div className={s.form} >
+      <div className={s.label}>
+        <TextField
+          className={s.field}
+          label="Email"
+          type="email"
+          name="email"
+          value={email}
+          onChange={handleChange}
+          placeholder="email"
+          autoComplete="off"
+          required
+        />
+        <TextField
+          className={s.field}
+          label="Password"
+          type="password"
+          name="password"
+          value={password}
+          onChange={handleChange}
+          placeholder="password"
+          autoComplete="off"
+          required
+        />
+      </div>
+      <button className={s.button} type="submit">
+        Log in
+      </button>
+    </div>
+    </Box>
   );
+
 }

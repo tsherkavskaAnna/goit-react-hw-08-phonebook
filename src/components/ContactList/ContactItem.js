@@ -1,12 +1,10 @@
-import { useDispatch } from 'react-redux';
-import contactsOperations from 'redux/contacts/contacts-operations';
+import { useDeleteContactMutation } from 'redux/contacts/contacts-slice';
 import s from './ContactList.module.css';
 
 
-export const ContactItem = ({ contactId, name, number }) => {
-  const dispatch = useDispatch();
- 
-  const onDelete = contactId => dispatch(contactsOperations.deleteContact(contactId))
+export const ContactItem = ({ id, name, number }) => {
+  const [deleteContact] = useDeleteContactMutation();
+
 
   return (
     <li className={s.contactsItem}>
@@ -15,7 +13,7 @@ export const ContactItem = ({ contactId, name, number }) => {
       <button
         className={s.btnDelete}
         type="button"
-        onClick={() => onDelete(contactId)}
+        onClick={() => (deleteContact(id))}
       >
         Delete
       </button>

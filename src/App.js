@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Container from "./components/Container/Container";
 import AppBar from "./components/AppBar/AppBar";
-import PrivateRoute from "./components/PrivateRoute";
+//import PrivateRoute from "./components/PrivateRoute";
 import PublicRoute from "./components/PublicRoute";
 
 
@@ -22,44 +22,56 @@ const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
 export default function App() {
   const dispatch = useDispatch();
   const isFetchingUser = useSelector(authSelectors.getIsFetchingCurrent)
+ 
 
   useEffect(() => {
     dispatch(authOperations.fetchCurrentUser());
   }, [dispatch]);
 
+
   return  (
-    <>
-      {!isFetchingUser && (
-    <Container>
-      <AppBar />
-      <Suspense fallback={<p>Loading...</p>}>
-            <Routes>
-              <Route path="/" element={
-                <PublicRoute>
+    !isFetchingUser && (
+      <Container>
+        <AppBar />
+        <Suspense fallback={<p>Loading...</p>}>
+          <Routes>
+            <Route
+              path="/"
+              element={(
+                <PublicRoute path="/">
                   <HomePage />
                 </PublicRoute>
-              } />
-              <Route path="register" element={
+              )}
+            />
+            <Route
+              path="/contacts"
+              element={(
                 <PublicRoute >
+                  <ContactsPage />
+                </PublicRoute>
+              )}
+            />
+            <Route
+              path="register"
+              element={(
+                <PublicRoute restricted>
                   <RegisterPage />
                 </PublicRoute>
-              } />
-              <Route path="login" element={
-                <PublicRoute >
-                  <LoginPage />
+              )}
+            />
+            <Route
+              path="login"
+              element={(
+                <PublicRoute restricted>
+                  <LoginPage/>
                 </PublicRoute>
-              } />
-              <Route path="contacts" element={
-                <PrivateRoute >
-                  <ContactsPage />
-                </PrivateRoute>
-              } />
-            </Routes>
-          </Suspense>
-          <ToastContainer/>
-        </Container>
-        )
-      }
-    </>
+              )}
+            />
+            <Route path="*" element={<p>Page not found</p>}/>
+          </Routes>
+        </Suspense>
+        <ToastContainer />
+      </Container>
     )
-}
+  );
+};

@@ -1,58 +1,25 @@
-.registration {
-    min-width: 350px;
-    max-width: 500px;
-    padding-left: 25px;
-    padding-right: 40px;
-    margin-right: auto;
-    margin-left: auto;
-    text-align: center;
-    background-color: lightcyan;
-    box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
-    border-radius: 6px;
-    overflow: hidden;
-  }
-  
-  .title {
-    margin-bottom: 15px;
-  }
-  
-  .title:first-child {
-    margin-top: 15px;
-  }
-  
+
   .form {
-    margin-bottom: 15px;
-  }
-  
-  .label {
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 15px;
     display: flex;
-    flex-wrap: wrap;
     flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 15px;
+    width: 350px;
+    margin-bottom: 20px;
+    margin-top: 20px;
   }
-  
-  .input {
-    width: 100%;
-    padding: 8px;
-    font-weight: normal;
-    border: 2px solid grey;
-    border-radius: 4px;
+  .field {
+    width: 350px;
+    margin-bottom: 30px;
   }
-  
-  .input:hover,
-  .input:focus {
-    border: 2px solid #2196f3;
-    cursor: pointer;
-  }
-  
   .button {
     display: block;
     margin: 0 auto;
     padding: 8px 12px;
     font-weight: normal;
     background-color: transparent;
-    border: 2px solid green;
+    border: 2px solid lightblue;
     border-radius: 4px;
     cursor: pointer;
-  }
+  } 

@@ -1,30 +1,23 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import s from './ContactList.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { getContacts, getFilter } from 'redux/contacts/contacts-selectors';
+import { useGetContactsQuery } from 'redux/contacts/contacts-slice';
+import { useSelector } from 'react-redux';
 import { ContactItem } from './ContactItem';
 
 
 const ContactList = () => {
-  const items = useSelector(getContacts);
-  const filter = useSelector(getFilter);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getContacts());
-  }, [dispatch]);
+  const { data: contacts, isLoading } = useGetContactsQuery();
+  const filter = useSelector(state => state.filter);
   
-
-  const getNormalizedItem = () => {
-    const  normalizedFilter = filter.toLowerCase().trim();
-    return items.filter(item => item.name.toLowerCase().includes(normalizedFilter))
-  }
-  const contacts = getNormalizedItem()
+  const normalizedFilter = filter.toLowerCase().trim();
+  const visibleContacts = contacts?.filter(({ name }) => name.toLowerCase().includes(normalizedFilter));
 
     return (
+      <div className={s.container}>
       <ul className={s.contactsList}>
-        {contacts.map(({ id, name, number }) => {
+        {isLoading && <p>Loading...</p>}
+        {visibleContacts && visibleContacts.map(({ id, name, number }) => {
           return (
             <ContactItem
               key={id}
@@ -35,6 +28,7 @@ const ContactList = () => {
           );
         })}
       </ul>
+      </div>
     );
   };
   

@@ -4,7 +4,7 @@ import s from '../Navigation/Navigation.module.css'
 
 export default function AuthNav() {
     return (
-    <nav>
+    <div>
         <NavLink
         to='/register'
         className = {({ isActive }) => (isActive ? s.activeLink : s.link)}
@@ -17,6 +17,6 @@ export default function AuthNav() {
         >
          Log in
         </NavLink>
-    </nav>
+    </div>
     );
   }
