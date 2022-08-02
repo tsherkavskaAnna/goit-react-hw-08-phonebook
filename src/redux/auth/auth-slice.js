@@ -15,7 +15,7 @@ const initialState = {
     extraReducers: {
       [authOperations.register.fulfilled](state, action) {
         state.user = action.payload.user;
-        state.token = action.payload.token;
+        state.token = action.payload.action;
         state.isLoggedIn = true;
       },
       [authOperations.logIn.fulfilled](state, action) {

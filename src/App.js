@@ -8,9 +8,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Container from "./components/Container/Container";
 import AppBar from "./components/AppBar/AppBar";
-//import PrivateRoute from "./components/PrivateRoute";
+import PrivateRoute from "./components/PrivateRoute";
 import PublicRoute from "./components/PublicRoute";
-
 
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
 const ContactsPage = lazy(() => import('./pages/ContactsPage/ContactsPage'));
@@ -22,7 +21,7 @@ const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
 export default function App() {
   const dispatch = useDispatch();
   const isFetchingUser = useSelector(authSelectors.getIsFetchingCurrent)
- 
+  
 
   useEffect(() => {
     dispatch(authOperations.fetchCurrentUser());
@@ -44,11 +43,11 @@ export default function App() {
               )}
             />
             <Route
-              path="/contacts"
+              path="contacts"
               element={(
-                <PublicRoute >
+                <PrivateRoute >
                   <ContactsPage />
-                </PublicRoute>
+                </PrivateRoute>
               )}
             />
             <Route
@@ -73,5 +72,5 @@ export default function App() {
         <ToastContainer />
       </Container>
     )
-  );
+  )
 };

@@ -6,7 +6,7 @@ import { authOperations } from 'redux/auth';
 
 import s from './RegisterPage.module.css';
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

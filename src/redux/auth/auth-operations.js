@@ -13,16 +13,15 @@ const token = {
         axios.defaults.headers.common.Authorization = '';
     },
 };
-const register = createAsyncThunk(
-  'auth/register',
-  async credentials => {
+const register = createAsyncThunk('auth/register', async credentials => {
       try {
-          const { data } = await axios.post('/users/signup', credentials);
-          token.set(data.token);
+          const { data } = await axios.post('users/signup', credentials);
+          token.set(data.token)
           toast.success(`You successfully signed up!`)
           return data;
       } catch (error) {
            toast.error('Something wrong! please try again!')
+    
       }
   }
 )

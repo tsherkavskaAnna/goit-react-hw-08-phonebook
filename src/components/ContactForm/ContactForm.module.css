@@ -1,27 +1,18 @@
+.button {
+  width: 150px;
+  margin: 10px auto;
+}
 .form {
-  padding: 15px;
-  border: 1px solid grey;
-  margin-bottom: 10px;
-  margin-top: 10px;
-}
-
-.label {
-  font-size: 20px;
-  width: 200px;
-}
-.input {
-  max-width: 100%;
-  display: flex;
-  margin-bottom: 15px;
-}
-
-.btnAdd {
-  background-color: #fff;
-  font-size: 12px;
-  width: 100px;
-  color: blue;
-  cursor: pointer;
-  text-align: center;
-  border: 1px solid grey;
+  border: 1px solid gray;
   border-radius: 5px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  margin: 40px auto;
+}
+.field {
+  padding: 15px;
+  width: 400px;
+  margin: 10px auto;
 }

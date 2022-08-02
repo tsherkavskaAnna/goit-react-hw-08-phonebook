@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useGetContactsQuery, useAddContactMutation } from 'redux/contacts/contacts-slice';
 import PropTypes from 'prop-types';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 import s from './ContactForm.module.css';
 import { nanoid } from 'nanoid';
 
@@ -11,7 +13,7 @@ const ContactsForm = () => {
   const [number, setNumber] = useState('');
   const id = nanoid();
 
-  const { data: contacts } = useGetContactsQuery();
+  const { data } = useGetContactsQuery();
   const [addContact] = useAddContactMutation();
 
   const handleChange = event => {
@@ -38,7 +40,7 @@ const ContactsForm = () => {
       number,
     };
 
-    if (contacts.find(contact => contact.name.toLowerCase() === name.toLowerCase())) {
+    if (data.some(contact => contact.name.toLowerCase() === name.toLowerCase())) {
       toast.warning('Name is already in contacts list!')
     } else {
       addContact(newContact)
@@ -54,44 +56,39 @@ const ContactsForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={s.form}>
-      <label className={s.label}>
-        Name
-        <input
-          className={s.input}
+    <>
+      <form className={s.form} action="submit" onSubmit={handleSubmit}>
+        <TextField
+          label="Name"
           type="text"
           name="name"
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          required
           value={name}
           onChange={handleChange}
+          autoComplete="Name"
+          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          required
+          sx={{ mb: '15px' }}
         />
-      </label>
-
-      <label className={s.label}>
-        Number
-        <input
-          className={s.input}
+        <TextField
+          label="Number"
           type="tel"
           name="number"
-          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-          required
           value={number}
           onChange={handleChange}
+          autoComplete="Number"
+          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          required
+          sx={{ mb: '15px' }}
         />
-      </label>
 
-      <button
-        type="submit"
-        disabled={!name || !number}
-        className={s.btnAdd}
-      >
-        Add Contact
-      </button>
-      <ToastContainer />
-    </form>
+        <div className={s.button}>
+          <Button type="submit" variant="contained" size="medium">
+            Add Contact
+          </Button>
+        </div>
+      </form>
+    </>
+    
   );
 };
 

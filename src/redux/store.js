@@ -7,7 +7,7 @@ import {
   PAUSE,
   PERSIST,
   PURGE,
-  REGISTER,
+  REGISTER
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { authReducer } from './auth';
@@ -27,14 +27,13 @@ export const store = configureStore({
       filter: filterSlice,
       [contactsApi.reducerPath]: contactsApi.reducer,
     },
-    middleware: getDefaultMiddleware => [
-      ...getDefaultMiddleware({
+    middleware: getDefaultMiddleware => {
+      return getDefaultMiddleware({
         serializableCheck: {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
-      }),
-      contactsApi.middleware,
-    ],
+      }).concat(contactsApi.middleware);
+    },
   });
 
   
