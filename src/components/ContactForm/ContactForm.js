@@ -39,14 +39,23 @@ const ContactsForm = () => {
       name,
       number,
     };
-
-    if (data.some(contact => contact.name.toLowerCase() === name.toLowerCase())) {
-      toast.warning('Name is already in contacts list!')
-    } else {
-      addContact(newContact)
-      toast.success('New contact is added a phonebook')
+  
+    if (
+      data.find(
+        contact => contact.name.toLowerCase() === name.toLocaleLowerCase()
+      )
+    ) {
+      return toast.error(`${name} is already in contact`);
     }
-    reset();
+    addContact({ newContact });
+    toast.success('Contact added!');
+  //   if (data.find(contact => contact.name.toLowerCase() === name.toLowerCase())) {
+  //     toast.warning('Name is already in contacts list!')
+  //   } else {
+  //     addContact(newContact)
+  //     toast.success('New contact is added a phonebook')
+  //   }
+   reset();
   }
 
 
